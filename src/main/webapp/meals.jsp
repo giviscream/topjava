@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <c:forEach items="${mealsTo}" var="meal">
-                <tr style="${meal.isExcess() ? 'color: red' : 'color: green'}">
+                <tr style="${meal.excess ? 'color: red' : 'color: green'}">
                     <td style="border: 1px solid black; padding: 5px">${meal.getLocalDateTimeStr()}</td>
                     <td style="border: 1px solid black; padding: 5px">${meal.description}</td>
                     <td style="border: 1px solid black; padding: 5px">${meal.calories}</td>

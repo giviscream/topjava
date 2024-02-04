@@ -32,14 +32,6 @@ public class MealTo {
         return excess;
     }
 
-    public LocalDate getDate() {
-        return dateTime.toLocalDate();
-    }
-
-    public LocalTime getTime() {
-        return dateTime.toLocalTime();
-    }
-
     public String getLocalDateTimeStr() {
         return dateTime.format(formatter);
     }
