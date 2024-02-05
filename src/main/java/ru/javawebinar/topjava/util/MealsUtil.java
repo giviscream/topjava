@@ -10,7 +10,6 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
@@ -28,25 +27,13 @@ public class MealsUtil {
         );
     }
 
-    public static class MealTimeInterval {
-        private final LocalTime startTime;
-        private final LocalTime endTime;
-
-        public LocalTime getStartTime() {
-            return startTime;
-        }
-
-        public LocalTime getEndTime() {
-            return endTime;
-        }
-
-        public MealTimeInterval(LocalTime startTime, LocalTime endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
+    public static List<MealTo> filteredByStreams(List<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
+        return convertToMealsTo(meals, caloriesPerDay).stream()
+                .filter(mealTo -> TimeUtil.isBetweenHalfOpen(mealTo.getDateTime().toLocalTime(), startTime, endTime))
+                .collect(Collectors.toList());
     }
 
-    public static List<MealTo> filteredByStreams(List<Meal> meals, int caloriesPerDay, Optional<MealTimeInterval> mealTimeInterval) {
+    public static List<MealTo> convertToMealsTo(List<Meal> meals, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
@@ -54,10 +41,6 @@ public class MealsUtil {
                 );
 
         return meals.stream()
-                .filter(meal -> {
-                    mealTimeInterval.ifPresent(timeInterval -> TimeUtil.isBetweenHalfOpen(meal.getTime(), timeInterval.getStartTime(), timeInterval.getEndTime()));
-                    return true;
-                })
                 .map(meal -> createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
     }

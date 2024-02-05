@@ -23,7 +23,7 @@
         <tbody>
             <c:forEach items="${mealsTo}" var="meal">
                 <tr style="color:${meal.excess ? 'red' : 'green'}">
-                    <td>${f:formatLocalDateTime(meal.dateTime, 'yyyy-MM-dd HH:mm')}</td>
+                    <td>${f:formatLocalDateTime(meal.dateTime)}</td>
                     <td>${meal.description}</td>
                     <td>${meal.calories}</td>
                 </tr>
