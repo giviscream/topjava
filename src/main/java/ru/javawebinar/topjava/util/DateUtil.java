@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static String formatLocalDateTime(LocalDateTime localDateTime) {
-        return localDateTime.format(dateTimeFormatter);
+        return localDateTime.format(DATE_TIME_FORMATTER);
     }
 }
